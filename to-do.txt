@@ -1,0 +1,4 @@
+* favoritos
+* estilizar detalhes
+* documentação
+* post e put se der

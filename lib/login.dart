@@ -1,13 +1,47 @@
+import 'package:cozy_games/home.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-class HomePage extends StatefulWidget{
-  const HomePage({super.key});
+TextEditingController _username = TextEditingController();
+TextEditingController _password = TextEditingController();
+
+class LoginPage extends StatefulWidget{
+  const LoginPage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<LoginPage> createState() => _LoginPageState();
 }
 
-class _HomePageState extends State<HomePage>{
+class _LoginPageState extends State<LoginPage>{
+
+  String username = 'Julia';
+  String password = 'DS11';
+
+  bool Login(){
+    if(_username.text == username && _password.text == password){
+      Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()),
+      );
+      return true;
+    }
+    else{
+      showDialog(
+        context: context,
+        builder: (context){
+          return AlertDialog(
+            title: Text('Erro'),
+            content: Text('Usuário ou senha incorretos!'),
+            actions: [
+              TextButton(onPressed: () => Navigator.of(context).pop(), child: Text('Fechar'))
+            ],
+          );
+        }
+      );
+      return false;
+    }
+  }
+
 
   @override
   Widget build(BuildContext context){
@@ -21,6 +55,7 @@ class _HomePageState extends State<HomePage>{
               Column(
                 children: [
                   TextField(
+
                     decoration: InputDecoration(
                         hintText: 'Username',
                         filled: true,
@@ -49,9 +84,8 @@ class _HomePageState extends State<HomePage>{
                             )
                         ),
 
-
-
                     ),
+                    controller: _username,
                   ),
                   SizedBox(height: 10),
                   TextField(
@@ -83,23 +117,17 @@ class _HomePageState extends State<HomePage>{
                           )
                       ),
                     ),
+                    controller: _password,
                   ),
                   SizedBox(height: 10),
                   ElevatedButton(
-                      onPressed: (){print('object');} ,
-                      child: Text('Login'),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.brown,
-                        foregroundColor: Colors.white,
-                        padding: EdgeInsets.all(10),
-                        textStyle: TextStyle(fontSize: 23),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30)
-                        ),
-                        minimumSize: Size(375, 60)
-                      ),
-
+                      onPressed: (){
+                          Login();
+                      } ,
+                      child: Text('Login')
                   ),
+                  SizedBox(height: 150),
+                  Text('Developed by Julia Siqueira', style: TextStyle(color: Colors.brown, fontSize: 18, fontWeight: FontWeight.bold),)
 
                 ],
               ),)
