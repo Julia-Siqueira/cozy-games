@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cozy_games/favorites.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -13,9 +14,11 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  int _currentIndex = 0;
   bool favorite = false;
 
   List<Map<String, dynamic>> gameList = [];
+  List<Map<String, dynamic>> favoriteGames = [];
 
   @override
   void initState() {
@@ -37,9 +40,18 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  void _handleFavorite() {
+  void handleFavorite(Map<String, dynamic> game) {
     setState(() {
       favorite = !favorite;
+    });
+
+    setState(() {
+      if(favoriteGames.contains(game)){
+        favoriteGames.remove(game);
+      }
+      else{
+        favoriteGames.add(game);
+      }
     });
   }
 
@@ -64,7 +76,36 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       backgroundColor: Color(0xFFd7cec8),
-      body: Center(
+      body: _currentIndex == 0
+          ? buildHomePage()
+          : FavoritesPage(favoriteGames: favoriteGames),
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Color(0xFFbe9f86),
+        selectedItemColor: Colors.white,
+        unselectedItemColor: Colors.brown[100],
+        currentIndex: _currentIndex,
+        onTap: (index) {
+          setState(() {
+            _currentIndex = index;
+          });
+        },
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.favorite),
+            label: 'Favoritos',
+          ),
+        ],
+      ),
+    );
+  }
+
+  @override
+  Widget buildHomePage() {
+      return Center(
         child: ListView.builder(
           padding: EdgeInsets.symmetric(vertical: 16),
           itemCount: gameList.length + 1,
@@ -91,8 +132,8 @@ class _HomePageState extends State<HomePage> {
                 child: Align(
                   alignment: Alignment.center,
                   child: Container(
-                    width: 300,
-                    height: 420, // aumentei um pouco para caber a nova organização vertical
+                    width: 290,
+                    height: 450, // aumentei um pouco para caber a nova organização vertical
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
                       color: Color(0xFFbe9f86),
@@ -105,8 +146,9 @@ class _HomePageState extends State<HomePage> {
                           Center(
                             child: Image.network(
                               game['imagem'],
-                              width: 150,
-                              height: 250,
+                              width: 200,
+                              height: 270,
+                              fit: BoxFit.fill,
                             ),
                           ),
                           SizedBox(height: 16),
@@ -114,7 +156,7 @@ class _HomePageState extends State<HomePage> {
                             game['nome'],
                             style: TextStyle(
                               color: Colors.white,
-                              fontSize: 17,
+                              fontSize: 20,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -132,7 +174,9 @@ class _HomePageState extends State<HomePage> {
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
                               GestureDetector(
-                                onTap: _handleFavorite,
+                                onTap: (){
+                                  handleFavorite(game);
+                                },
                                 child: Image.asset(
                                   favorite ? 'assets/images/favorite.png' : 'assets/images/star.png',
                                   width: 30,
@@ -159,7 +203,6 @@ class _HomePageState extends State<HomePage> {
             );
           },
         ),
-      ),
-    );
+      );
   }
 }

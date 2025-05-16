@@ -127,7 +127,7 @@ class _LoginPageState extends State<LoginPage>{
                       child: Text('Login')
                   ),
                   SizedBox(height: 150),
-                  Text('Developed by Julia Siqueira', style: TextStyle(color: Colors.brown, fontSize: 18, fontWeight: FontWeight.bold),)
+                  Text('Developed by Julia Siqueira', style: TextStyle(color: Colors.brown, fontSize: 18, fontWeight: FontWeight.bold))
 
                 ],
               ),)
@@ -137,7 +137,8 @@ class _LoginPageState extends State<LoginPage>{
             ]
 
         ),
-      )
+      ),
+
     );
   }
 }

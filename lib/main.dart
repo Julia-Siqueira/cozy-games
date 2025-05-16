@@ -1,3 +1,4 @@
+import 'package:cozy_games/favorites.dart';
 import 'package:cozy_games/home.dart';
 import 'package:flutter/material.dart';
 import 'login.dart';
@@ -41,7 +42,7 @@ class MyApp extends StatelessWidget {
         )
       ),
       debugShowCheckedModeBanner: false,
-      home: LoginPage()
+      home: HomePage()
     );
   }
 }
