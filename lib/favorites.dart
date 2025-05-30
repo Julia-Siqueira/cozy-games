@@ -57,7 +57,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
               alignment: Alignment.center,
               child: Container(
                 width: 290,
-                height: 450,
+                height: 500,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
                   color: Color(0xFFbe9f86),

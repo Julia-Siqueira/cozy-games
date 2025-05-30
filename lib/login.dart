@@ -1,8 +1,10 @@
+import 'package:cozy_games/admin.dart';
 import 'package:cozy_games/home.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cozy_games/admin.dart';
 
 TextEditingController _username = TextEditingController();
 TextEditingController _password = TextEditingController();
@@ -19,9 +21,17 @@ class _LoginPageState extends State<LoginPage>{
   String username = 'Julia';
   String password = 'DS11';
 
+  String adminUsername = 'Admin';
+  String adminPassword = 'Password';
+
   bool Login(){
     if(_username.text == username && _password.text == password){
       Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()),
+      );
+      return true;
+    }
+    else if(_username.text == adminUsername && _password.text == adminPassword){
+      Navigator.push(context, MaterialPageRoute(builder: (context) => AdminPage()),
       );
       return true;
     }

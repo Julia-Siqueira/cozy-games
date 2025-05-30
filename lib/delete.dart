@@ -6,14 +6,14 @@ import 'firebase_options.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cozy_games/favorites.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class DeletePage extends StatefulWidget {
+  const DeletePage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<DeletePage> createState() => _DeletePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _DeletePageState extends State<DeletePage> {
   int _currentIndex = 0;
   bool favorite = false;
 
@@ -40,25 +40,6 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  void handleFavorite(Map<String, dynamic> game) {
-    setState(() {
-      favorite = !favorite;
-    });
-
-    setState(() {
-      if(favoriteGames.contains(game)){
-        favoriteGames.remove(game);
-      }
-      else{
-        favoriteGames.add(game);
-      }
-    });
-  }
-
-  void _handleEdit() {
-    print("Editou o jogo!");
-  }
-
   void _handleDelete(String id) {
     FirebaseFirestore.instance.collection('games').doc(id).delete();
   }
@@ -76,43 +57,14 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       backgroundColor: Color(0xFFd7cec8),
-      body: _currentIndex == 0
-          ? buildHomePage()
-          : FavoritesPage(favoriteGames: favoriteGames),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Color(0xFFbe9f86),
-        selectedItemColor: Colors.white,
-        unselectedItemColor: Colors.brown[100],
-        currentIndex: _currentIndex,
-        onTap: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
-        },
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.favorite),
-            label: 'Favoritos',
-          ),
-        ],
-      ),
-    );
-  }
-
-  @override
-  Widget buildHomePage() {
-      return Center(
+      body: Center(
         child: ListView.builder(
           padding: EdgeInsets.symmetric(vertical: 16),
           itemCount: gameList.length + 1,
           itemBuilder: (context, index) {
             if (index == 0) {
               return Center(
-                child: Image.asset('assets/images/title.png', height: 300),
+                child: Image.asset('assets/images/Delete.png', height: 300),
               );
             }
 
@@ -174,19 +126,6 @@ class _HomePageState extends State<HomePage> {
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
                               GestureDetector(
-                                onTap: (){
-                                  handleFavorite(game);
-                                },
-                                child: Image.asset(
-                                  favorite ? 'assets/images/favorite.png' : 'assets/images/star.png',
-                                  width: 30,
-                                ),
-                              ),
-                              GestureDetector(
-                                onTap: _handleEdit,
-                                child: Image.asset('assets/images/pencil.png', width: 30),
-                              ),
-                              GestureDetector(
                                 onTap: () {
                                   _handleDelete(game['id']);
                                 },
@@ -203,6 +142,10 @@ class _HomePageState extends State<HomePage> {
             );
           },
         ),
-      );
+      )
+    );
   }
-}
+
+
+  }
+
