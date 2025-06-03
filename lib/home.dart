@@ -15,7 +15,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _currentIndex = 0;
-  bool favorite = false;
 
   List<Map<String, dynamic>> gameList = [];
   List<Map<String, dynamic>> favoriteGames = [];
@@ -42,18 +41,16 @@ class _HomePageState extends State<HomePage> {
 
   void handleFavorite(Map<String, dynamic> game) {
     setState(() {
-      favorite = !favorite;
-    });
+      final isFavorited = favoriteGames.any((fav) => fav['id'] == game['id']);
 
-    setState(() {
-      if(favoriteGames.contains(game)){
-        favoriteGames.remove(game);
-      }
-      else{
+      if (isFavorited) {
+        favoriteGames.removeWhere((fav) => fav['id'] == game['id']);
+      } else {
         favoriteGames.add(game);
       }
     });
   }
+
 
   void _handleEdit() {
     print("Editou o jogo!");
@@ -178,7 +175,9 @@ class _HomePageState extends State<HomePage> {
                                   handleFavorite(game);
                                 },
                                 child: Image.asset(
-                                  favorite ? 'assets/images/favorite.png' : 'assets/images/star.png',
+                                  favoriteGames.any((fav) => fav['id'] == game['id'])
+                                      ? 'assets/images/favorite.png'
+                                      : 'assets/images/star.png',
                                   width: 30,
                                 ),
                               ),

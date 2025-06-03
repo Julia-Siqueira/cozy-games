@@ -1,3 +1,4 @@
+import 'package:cozy_games/edit.dart';
 import 'package:cozy_games/post.dart';
 import 'package:cozy_games/delete.dart';
 import 'package:flutter/material.dart';
@@ -40,7 +41,9 @@ class _AdminPageState extends State<AdminPage> {
               Navigator.push(context, MaterialPageRoute(builder: (context) => DeletePage()),);
             }, child: Text('Remover jogo')),
             SizedBox(height: 20),
-            ElevatedButton(onPressed: (){}, child: Text('Editar jogo')),
+            ElevatedButton(onPressed: (){
+              Navigator.push(context, MaterialPageRoute(builder: (context) => EditPage()),);
+            }, child: Text('Editar jogo')),
             SizedBox(height: 20),
             ElevatedButton(onPressed: (){}, child: Text('Ver jogos'))
           ],

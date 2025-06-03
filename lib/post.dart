@@ -18,6 +18,8 @@ class PostPage extends StatefulWidget {
 }
 
 class _PostPageState extends State<PostPage> {
+
+  DateTime? _dataSelecionada;
   
   final firestore = FirebaseFirestore.instance;
   
@@ -97,6 +99,7 @@ class _PostPageState extends State<PostPage> {
                       ),
                     ),
                     controller: _nome,
+                    style: TextStyle(color: Colors.brown),
                   ),
 
                   SizedBox(height: 20),
@@ -131,6 +134,7 @@ class _PostPageState extends State<PostPage> {
                       ),
                     ),
                     controller: _empresa,
+                    style: TextStyle(color: Colors.brown),
                   ),
 
                   SizedBox(height: 20),
@@ -165,6 +169,7 @@ class _PostPageState extends State<PostPage> {
                       ),
                     ),
                     controller: _imagem,
+                    style: TextStyle(color: Colors.brown),
                   ),
 
                   SizedBox(height: 20),
@@ -200,6 +205,7 @@ class _PostPageState extends State<PostPage> {
                       ),
                     ),
                     controller: _preco,
+                    style: TextStyle(color: Colors.brown),
                   ),
 
                   SizedBox(height: 20),
@@ -234,6 +240,7 @@ class _PostPageState extends State<PostPage> {
                       ),
                     ),
                     controller: _tempo,
+                    style: TextStyle(color: Colors.brown),
                   ),
 
                   SizedBox(height: 20),
@@ -268,6 +275,7 @@ class _PostPageState extends State<PostPage> {
                       ),
                     ),
                     controller: _lancamento,
+                    style: TextStyle(color: Colors.brown),
                   ),
 
                   SizedBox(height: 20,),

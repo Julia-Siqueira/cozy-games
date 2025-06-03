@@ -48,7 +48,7 @@ class _DeletePageState extends State<DeletePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.brown,
+        backgroundColor: Color(0xFF9c7a64),
         actions: [
           Padding(
             padding: EdgeInsets.only(right: 16),
@@ -64,7 +64,7 @@ class _DeletePageState extends State<DeletePage> {
           itemBuilder: (context, index) {
             if (index == 0) {
               return Center(
-                child: Image.asset('assets/images/Delete.png', height: 300),
+                child: Image.asset('assets/images/Delete.png', height: 150),
               );
             }
 
