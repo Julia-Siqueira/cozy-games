@@ -7,35 +7,47 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cozy_games/admin.dart';
 import 'auth.dart';
 import 'package:cozy_games/cadastro.dart';
-import 'package:cozy_games/loginAdmin.dart';
 
-class LoginPage extends StatefulWidget{
-  const LoginPage({super.key});
+class LoginAdmin extends StatefulWidget{
+  const LoginAdmin({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<LoginAdmin> createState() => _LoginAdminPageState();
 }
 
-class _LoginPageState extends State<LoginPage>{
-  TextEditingController _email = TextEditingController();
+class _LoginAdminPageState extends State<LoginAdmin>{
+  TextEditingController _login = TextEditingController();
   TextEditingController _password = TextEditingController();
+
+  String login = 'admin';
+  String password = 'adminpass';
+
 
   @override
   Widget build(BuildContext context){
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Color(0xFFb4967f),
+        actions: [
+          Padding(
+            padding: EdgeInsets.only(right: 16),
+            child: Image.asset('assets/images/cozy_logo.png', height: 45),
+          ),
+        ],
+      ),
       backgroundColor: Color(0xFFd7cec8),
       body: Center(
         child: SingleChildScrollView(
           child: Column(
               children: [
-                Padding(padding: EdgeInsets.only(top: 50), child:  Image.asset("assets/images/title.png", width: 300)),
+                Padding(padding: EdgeInsets.only(top: 0), child:  Image.asset("assets/images/title.png", width: 300)),
                 Padding(padding: EdgeInsets.all(20), child:
                 Column(
                   children: [
                     TextField(
 
                       decoration: InputDecoration(
-                        hintText: 'E-mail',
+                        hintText: 'User',
                         filled: true,
                         fillColor: Color(0xFFb69889),
                         hintStyle: TextStyle(color: Colors.white),
@@ -63,7 +75,7 @@ class _LoginPageState extends State<LoginPage>{
                         ),
 
                       ),
-                      controller: _email,
+                      controller: _login,
                     ),
                     SizedBox(height: 10),
                     TextField(
@@ -101,49 +113,18 @@ class _LoginPageState extends State<LoginPage>{
                     SizedBox(height: 10),
                     ElevatedButton(
                         onPressed: () async{
-                          final message = await AuthService().login(email: _email.text, password: _password.text);
 
-                          if(message!.contains('Success')){
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
+                          if(_login.text.trim() == login && _password.text.trim() == password){
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => AdminPage()));
                           }
 
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text(message))
-                          );
+                          else{
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text('Usuário ou senha incorretos'))
+                            );
+                          }
                         } ,
                         child: Text('Login')
-                    ),
-                    SizedBox(height: 30,),
-                    Text('Ainda não é cadastrado?', style: TextStyle(color: Colors.brown, fontSize: 18, fontWeight: FontWeight.bold)),
-                    SizedBox(height: 10,),
-                    ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => Cadastro()));
-                      },
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: Color(0xFFc07fbb),
-                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                        minimumSize: Size(200, 50),
-                        tapTargetSize: MaterialTapTargetSize.shrinkWrap, // Remove o espaço extra
-                        textStyle: const TextStyle(fontSize: 12), // Tamanho da fonte
-                      ),
-                      child: const Text('Faça seu cadastro', style: TextStyle(color: Colors.white, fontSize: 18)),
-                    ),
-                    SizedBox(height: 25,),
-                    Text('É administrador?', style: TextStyle(color: Colors.brown, fontSize: 18, fontWeight: FontWeight.bold)),
-                    SizedBox(height: 10,),
-                    ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => LoginAdmin()));
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xFFc07fbb),
-                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                        minimumSize: Size(200, 50),
-                        tapTargetSize: MaterialTapTargetSize.shrinkWrap, // Remove o espaço extra
-                        textStyle: const TextStyle(fontSize: 12), // Tamanho da fonte
-                      ),
-                      child: const Text('Faça seu login', style: TextStyle(color: Colors.white, fontSize: 18)),
                     ),
                     SizedBox(height: 50),
                     Text('Developed by Julia Siqueira', style: TextStyle(color: Colors.brown, fontSize: 18, fontWeight: FontWeight.bold))

@@ -94,30 +94,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
                         style: TextStyle(color: Colors.white, fontSize: 15),
                       ),
                       SizedBox(height: 16),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              handleFavorite();
-                            },
-                            child: Image.asset(
-                              favorite ? 'assets/images/favorite.png' : 'assets/images/star.png',
-                              width: 30,
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: _handleEdit,
-                            child: Image.asset('assets/images/pencil.png', width: 30),
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              _handleDelete(game['id']);
-                            },
-                            child: Image.asset('assets/images/trash.png', width: 30),
-                          ),
-                        ],
-                      ),
+
                     ],
                   ),
                 ),

@@ -3,7 +3,6 @@ description: "A new Flutter project."
 
 publish_to: 'none'
 
-
 version: 1.0.0+1
 
 environment:
@@ -12,11 +11,17 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  intl: ^0.18.1
 
   cupertino_icons: ^1.0.8
   http: ^1.4.0
+  flutter_map: ^8.1.1
+  latlong2: ^0.9.1
+
   firebase_core: ^3.12.1
   cloud_firestore: ^5.6.5
+
+  firebase_auth: ^5.6.0
 
 dev_dependencies:
   flutter_test:

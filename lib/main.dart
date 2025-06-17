@@ -43,7 +43,7 @@ class MyApp extends StatelessWidget {
         )
       ),
       debugShowCheckedModeBanner: false,
-      home: TelaGet(),
+      home: LoginPage(),
 
     );
   }

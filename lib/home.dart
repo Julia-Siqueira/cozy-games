@@ -1,3 +1,4 @@
+import 'package:cozy_games/conselhos.dart';
 import 'package:cozy_games/detalhes.dart';
 import 'package:cozy_games/login.dart';
 import 'package:flutter/material.dart';
@@ -5,6 +6,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cozy_games/favorites.dart';
+import 'package:cozy_games/map.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -64,7 +66,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.brown,
+        backgroundColor: Color(0xFFb4967f),
         actions: [
           Padding(
             padding: EdgeInsets.only(right: 16),
@@ -75,8 +77,13 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: Color(0xFFd7cec8),
       body: _currentIndex == 0
           ? buildHomePage()
-          : FavoritesPage(favoriteGames: favoriteGames),
+          : _currentIndex == 1
+          ? FavoritesPage(favoriteGames: favoriteGames)
+          : _currentIndex == 2
+          ? Mapa()
+          : Conselhos(), // <-- Sua nova página
       bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
         backgroundColor: Color(0xFFbe9f86),
         selectedItemColor: Colors.white,
         unselectedItemColor: Colors.brown[100],
@@ -92,8 +99,16 @@ class _HomePageState extends State<HomePage> {
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.favorite),
+            icon: Icon(Icons.star),
             label: 'Favoritos',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.store_rounded),
+            label: 'Nossas Lojas',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.favorite),
+            label: 'Um conselho?',
           ),
         ],
       ),
@@ -180,16 +195,6 @@ class _HomePageState extends State<HomePage> {
                                       : 'assets/images/star.png',
                                   width: 30,
                                 ),
-                              ),
-                              GestureDetector(
-                                onTap: _handleEdit,
-                                child: Image.asset('assets/images/pencil.png', width: 30),
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  _handleDelete(game['id']);
-                                },
-                                child: Image.asset('assets/images/trash.png', width: 30),
                               ),
                             ],
                           ),

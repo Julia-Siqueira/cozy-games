@@ -64,7 +64,7 @@ class _DeletePageState extends State<DeletePage> {
           itemBuilder: (context, index) {
             if (index == 0) {
               return Center(
-                child: Image.asset('assets/images/Delete.png', height: 150),
+                child: Image.asset('assets/images/Delete.png', height: 120),
               );
             }
 

@@ -1,4 +1,5 @@
 import 'package:cozy_games/login.dart';
+import 'package:cozy_games/map.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
@@ -44,16 +45,18 @@ class _DetailPageState extends State<DetailPage> {
       ),
       backgroundColor: Color(0xFFd7cec8),
       body:
-        Center(
+        SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Padding(padding: EdgeInsets.all(20),
               child: Image.network(gameData['imagem'], height: 500)),
               SizedBox(height: 10),
-              Text(
-                '${(gameData['nome'])}',
-                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.brown),),
+              Center(
+                child:  Text(
+                  '${(gameData['nome'])}',
+                  style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.brown),),
+              ),
               Container(
                 width: double.infinity,
                 padding: EdgeInsets.only(left: 50),
@@ -76,36 +79,35 @@ class _DetailPageState extends State<DetailPage> {
                         'Preço: R\$ ${gameData['preco']}',
                         style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color: Color(0xFF674a38))),
                     SizedBox(height: 20),
+
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => Scaffold(
+                              appBar: AppBar(
+                                backgroundColor: Color(0xFFb4967f),
+                                title: Text('Nossas Lojas', style: TextStyle(color: Colors.white),),
+                              ),
+                              body: Mapa(), // <<< Mapa vira o body
+                            ),
+                          ),
+                        );
+                      },
+                      child: Text('Comprar'),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Color(0xFFc07fbb),
+                        minimumSize: Size(325, 50),
+                      ),
+                    ),
+
+
                   ],
                 ),
               ),
 
-                Padding(
-                  padding: EdgeInsets.only(left: 50),
-                  child: Row(
-                    children: [
-                      SizedBox(
-                        width: 200,
-                        child: ElevatedButton(
-                            onPressed: (){},
-                            child: Text('Comprar'),
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Color(0xFFc07fbb)
-                            )),
-                      ),
-                      SizedBox(width: 70),
-                      GestureDetector(
-                        onTap: _handleFavorite,
-                        child: Image.asset(
-                          favorite ? 'assets/images/favorite.png' : 'assets/images/star.png',
-                          width: 50,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-
-
+              SizedBox(height: 50,)
               ],
 
 

@@ -8,14 +8,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cozy_games/favorites.dart';
 import 'package:http/http.dart' as http;
 
-class TelaGet extends StatefulWidget {
-  const TelaGet({super.key});
+class Conselhos extends StatefulWidget {
+  const Conselhos({super.key});
 
   @override
-  State<TelaGet> createState() => _TelaGetState();
+  State<Conselhos> createState() => _ConselhosState();
 }
 
-class _TelaGetState extends State<TelaGet> {
+class _ConselhosState extends State<Conselhos> {
   String? conselhos;
 
   @override
@@ -42,6 +42,7 @@ class _TelaGetState extends State<TelaGet> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xFFd7cec8),
       body: Center(
         child: conselhos == null ? CircularProgressIndicator() : Text(conselhos!),
       ),

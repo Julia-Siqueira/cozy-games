@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
 
 TextEditingController _id = TextEditingController();
 TextEditingController _nome = TextEditingController();
@@ -20,11 +21,17 @@ class EditPage extends StatefulWidget {
 
 class _EditPageState extends State<EditPage> {
 
+  DateTime? _dataSelecionada;
+
   final firestore = FirebaseFirestore.instance;
 
   void update(String documentId){
+    DateTime data = DateFormat('dd/MM/yyyy').parse(_lancamento.text);
+
+    Timestamp timestamp = Timestamp.fromDate(data);
+
     firestore.collection('games').doc(documentId).update({
-      'data_lancamento': _lancamento.text,
+      'data_lancamento': timestamp,
       'duracao': _tempo.text,
       'empresa': _empresa.text,
       'imagem': _imagem.text,
@@ -49,7 +56,7 @@ class _EditPageState extends State<EditPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xFF9c7a64),
+        backgroundColor: Color(0xFFb4967f),
         actions: [
           Padding(
             padding: EdgeInsets.only(right: 16),
@@ -63,7 +70,7 @@ class _EditPageState extends State<EditPage> {
           child: Column(
             children: [
               SizedBox(height: 40),
-              Image.asset('assets/images/Put.png', height: 120),
+              Image.asset('assets/images/Put.png', height: 100),
               Text('Preencha as informações abaixo', style: TextStyle(fontSize: 20, color: Colors.brown),),
               SizedBox(height: 10,),
               Container(
@@ -72,7 +79,7 @@ class _EditPageState extends State<EditPage> {
                   children: [
                     TextField(
                       decoration: InputDecoration(
-                        hintText: 'ID',
+                        hintText: 'Documento',
                         filled: true,
                         fillColor: Colors.white,
                         hintStyle: TextStyle(color: Colors.brown),
